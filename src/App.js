@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from 'react'
+import data from './Data/Data.json'
 function App() {
+  
+  const [values, setvalues] = useState(data['Indian'])
+  let val = Object.keys(data)
+
+  function setdata(id) {
+    let mummy = data[id]
+   
+    setvalues(mummy)
+    console.log(mummy);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>  
+     <nav>
+        <div className="nav_head">🍽️ Recipes</div>
+    </nav> 
+    
+    <div className='Container' >
+      {val.map( (e , i) => {
+      return  <button onClick={() => setdata(e)} key = {i} className = 'glassmorphism' > {e} </button>
+      })}
+      
+        <div  className='data-container'>
+{values.map((e) => <Card key={e.id}  data = {e} />)}
+        </div>
     </div>
-  );
+    </>
+  )
 }
 
-export default App;
+
+
+function Card({data}) {
+  return(
+    <div className='glassmorphism' > 
+    <h3> {data.name}  </h3>
+     <p> {data.ingredients} </p>
+    </div>
+  )
+}
+
+export default App
